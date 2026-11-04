@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Leaders | Three Feathers{% endblock %}
+{% block content %}
+<h2>Leaders</h2>
+<p class="lede">Ranked from the most to the fewest. The coach updates goals and assists on the Squad page.</p>
+<div class="boards">
+{% include 'board.html' with title='Top scorers' rows=scorers unit='goals' %}
+{% include 'board.html' with title='Most assists' rows=assisters unit='assists' %}
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+<div class="ctl"><span>{{ label }}</span>
+<form method="post" action="{% url 'bump' p.pk field 'down' %}">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}#player-{{ p.pk }}"><button class="sm" type="submit" aria-label="Remove one {{ label|lower }} from {{ p.name }}">−</button></form>
+<form method="post" action="{% url 'bump' p.pk field 'up' %}">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}#player-{{ p.pk }}"><button class="sm" type="submit" aria-label="Add one {{ label|lower }} to {{ p.name }}">+</button></form>
+</div>

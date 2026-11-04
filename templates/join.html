@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Join Us | Three Feathers{% endblock %}
+{% block content %}
+<h2>Become Part of Three Feathers</h2>
+<p class="lede">Passionate about field hockey? Whether you're an experienced player or just starting out, we welcome people who want to learn, compete and grow.</p>
+<div class="coach">
+  <form method="post">{% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <label{% if field.name == 'message' or field.name == 'experience' %} class="wide"{% endif %}>{{ field.label }}{{ field }}{{ field.errors }}</label>
+    {% endfor %}
+    <div class="actions" style="grid-column:1/-1"><button class="btn" type="submit">Send registration</button></div>
+  </form>
+</div>
+{% endblock %}

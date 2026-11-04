@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}About | Three Feathers{% endblock %}
+{% block content %}
+<h2>About the club</h2>
+<p class="lede">Three Feathers Hockey Club is built around teamwork, discipline and a love of the game.</p>
+<div class="about">
+  <div class="panel">
+    <h3>Our story</h3>
+    <p>{{ club.history|default:"The club continues to grow through commitment, training and community spirit."|linebreaksbr }}</p>
+  </div>
+  <div class="panel">
+    <h3>Mission</h3>
+    <p>{{ club.mission|default:"To develop confident, skilled and respectful players who enjoy the sport and represent the club with pride."|linebreaksbr }}</p>
+  </div>
+</div>
+<div class="about" style="margin-top:20px;">
+  <div class="panel">
+    <h3>Our vision</h3>
+    <p>{{ club.vision|default:"To create a positive and competitive hockey environment where every player can improve and contribute."|linebreaksbr }}</p>
+  </div>
+  <div class="panel">
+    <h3>Our values</h3>
+    <ul>
+      {% for value in values %}<li>{{ value }}</li>{% empty %}<li>Teamwork</li><li>Discipline</li><li>Respect</li><li>Commitment</li><li>Sportsmanship</li><li>Excellence</li>{% endfor %}
+    </ul>
+  </div>
+</div>
+{% if request.session.coach %}
+<div style="margin-top:20px;"><a class="btn" href="{% url 'add' 'club' %}">Edit club info</a></div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Fixtures | Three Feathers{% endblock %}
+{% block content %}
+<h2>Fixtures</h2>
+<p class="lede">Upcoming games and the results from games already played.</p>
+{% if request.session.coach %}<div class="actions"><a class="btn" href="{% url 'add' 'fixture' %}">Add a game</a></div>{% endif %}
+<h3 class="sub">Upcoming games</h3>
+<div class="stack">{% for f in upcoming %}{% include 'fixture.html' %}{% empty %}<p class="empty on-bg">No upcoming games have been added yet.</p>{% endfor %}</div>
+<h3 class="sub">Played games</h3>
+<div class="stack">{% for f in played %}{% include 'fixture.html' %}{% empty %}<p class="empty on-bg">No results yet.</p>{% endfor %}</div>
+{% endblock %}

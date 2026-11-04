@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Results | Three Feathers{% endblock %}
+{% block content %}
+<h2>Recent results</h2>
+<p class="lede">Results from the latest matches played by Three Feathers.</p>
+<div class="stack">
+  {% for f in results %}
+    <article class="fx">
+      <div class="when"><b>{{ f.date|date:"j" }}</b><span>{{ f.date|date:"M Y" }}</span></div>
+      <div>
+        <h3>Three Feathers {{ f.our_score }} - {{ f.their_score }} {{ f.opponent }}</h3>
+        <small>{{ f.date|date:"l" }}{% if f.venue %}, {{ f.venue }}{% endif %}{% if f.competition %}, {{ f.competition }}{% endif %}</small>
+      </div>
+      {% with o=f.outcome %}
+        <div class="resbox"><span class="score">{{ f.our_score }} – {{ f.their_score }}</span><span class="res {{ o.0 }}">{{ o.1 }}</span></div>
+      {% endwith %}
+    </article>
+  {% empty %}
+    <p class="empty on-bg">No results have been recorded yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

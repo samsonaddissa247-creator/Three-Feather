@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Admin Photos | Three Feathers{% endblock %}
+{% block content %}
+<h2>Photo administration</h2>
+<p class="lede">Review and manage gallery uploads for the club.</p>
+<div class="actions"><a class="btn" href="{% url 'add' 'photo' %}">Add photo</a></div>
+<div class="grid">
+  {% for photo in photos %}
+    <article class="card photo-card">
+      {% if photo.image %}<img src="{{ photo.image.url }}" alt="{{ photo.caption }}">{% endif %}
+      <div class="cardbody">
+        <h3>{{ photo.caption }}</h3>
+        <p>{{ photo.date|date:'d M Y' }}</p>
+        <div class="acts">
+          {% include 'remove.html' with kind='photo' obj=photo label='Remove' %}
+        </div>
+      </div>
+    </article>
+  {% empty %}
+    <p class="empty on-bg">No gallery images have been uploaded yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

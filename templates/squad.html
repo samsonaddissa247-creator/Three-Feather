@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Squad | Three Feathers{% endblock %}
+{% block content %}
+<h2>The squad</h2>
+<p class="lede">Everyone who pulls on the maroon and white.</p>
+{% if request.session.coach %}<div class="actions"><a class="btn" href="{% url 'add' 'player' %}">Add player</a></div>{% endif %}
+<div class="toolbar">
+<a class="chip{% if not pos %} on{% endif %}" href="{% url 'squad' %}">All players</a>
+{% for name in positions %}<a class="chip{% if pos == name %} on{% endif %}" href="?pos={{ name }}">{{ name }}s</a>{% endfor %}
+<form class="search" method="get"><input type="hidden" name="pos" value="{{ pos }}"><input type="search" name="q" value="{{ q }}" placeholder="Search name or number" aria-label="Search players"></form>
+</div>
+<div class="grid">
+{% for p in players %}
+<article class="card" id="player-{{ p.pk }}">
+<div class="cardhead">{% include 'avatar.html' %}<div class="num">{% if p.number is not None %}#{{ p.number }}{% endif %}</div></div>
+<h3><a href="{% url 'player_detail' p.pk %}" style="color:inherit;text-decoration:none;">{{ p.name }}</a></h3>
+<div class="pos">{{ p.position }}</div>
+<div class="tally"><div><b>{{ p.goals }}</b><span>Goals</span></div><div><b>{{ p.assists }}</b><span>Assists</span></div></div>
+{% if request.session.coach %}
+{% include 'bump.html' with field='goals' label='Goals' %}
+{% include 'bump.html' with field='assists' label='Assists' %}
+{% include 'remove.html' with kind='player' obj=p label='Remove player' %}
+{% endif %}
+</article>
+{% empty %}
+<p class="empty on-bg">{% if total %}No players match that search.{% else %}The squad list is coming soon.{% endif %}</p>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Registrations | Three Feathers{% endblock %}
+{% block content %}
+<h2>Club registrations</h2>
+<p class="lede">Review new applications and either accept or reject them.</p>
+<div class="stack">
+  {% for reg in registrations %}
+    <article class="panel">
+      <h3>{{ reg.full_name }}</h3>
+      <p><strong>Age:</strong> {{ reg.age|default:'Not supplied' }} | <strong>Phone:</strong> {{ reg.phone }} | <strong>Email:</strong> {{ reg.email|default:'Not supplied' }}</p>
+      <p><strong>Experience:</strong> {{ reg.experience|default:'No experience recorded' }}</p>
+      <p><strong>Preferred position:</strong> {{ reg.position|default:'Not provided' }}</p>
+      <p><strong>Status:</strong> {{ reg.status }}</p>
+      <p><strong>Message:</strong> {{ reg.message|default:'No extra message.' }}</p>
+      {% if reg.status == 'new' %}
+      <div class="acts">
+        <form method="post" action="{% url 'registration_action' reg.pk 'accepted' %}">{% csrf_token %}<button class="btn" type="submit">Accept</button></form>
+        <form method="post" action="{% url 'registration_action' reg.pk 'rejected' %}">{% csrf_token %}<button class="btn alt" type="submit">Reject</button></form>
+      </div>
+      {% endif %}
+    </article>
+  {% empty %}
+    <p class="empty on-bg">No registrations have been received yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

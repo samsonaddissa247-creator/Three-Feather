@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Contact | Three Feathers{% endblock %}
+{% block content %}
+<h2>Contact the club</h2>
+<p class="lede">Get in touch with the club for membership, training and general enquiries.</p>
+<div class="about">
+  <div class="panel">
+    <h3>Club details</h3>
+    {% if club.phone %}<p><strong>Phone:</strong> {{ club.phone }}</p>{% endif %}
+    {% if club.email %}<p><strong>Email:</strong> {{ club.email }}</p>{% endif %}
+    {% if club.pitch %}<p><strong>Training location:</strong> {{ club.pitch }}</p>{% endif %}
+    {% if club.contact %}<p><strong>Coach contact:</strong> {{ club.contact }}</p>{% endif %}
+  </div>
+  <div class="panel">
+    <h3>Send a message</h3>
+    <form method="post">{% csrf_token %}
+      {{ form.non_field_errors }}
+      {% for field in form %}
+        <label{% if field.name == 'message' %} class="wide"{% endif %}>{{ field.label }}{{ field }}{{ field.errors }}</label>
+      {% endfor %}
+      <div class="actions" style="grid-column:1/-1"><button class="btn" type="submit">Send message</button></div>
+    </form>
+  </div>
+</div>
+{% endblock %}

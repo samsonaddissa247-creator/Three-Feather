@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Admin Fixtures | Three Feathers{% endblock %}
+{% block content %}
+<h2>Fixture administration</h2>
+<p class="lede">Manage upcoming games and completed results.</p>
+<div class="actions"><a class="btn" href="{% url 'add' 'fixture' %}">Add fixture</a></div>
+<div class="stack">
+  {% for f in fixtures %}
+    <article class="panel">
+      <div class="fixture-header">
+        <div>
+          <h3>{{ f.opponent }}</h3>
+          <p>{{ f.date }} • {{ f.venue }} • {% if f.is_home %}Home{% else %}Away{% endif %}</p>
+        </div>
+        {% if f.result %}
+          <span class="pill success">Result</span>
+        {% else %}
+          <span class="pill">Fixture</span>
+        {% endif %}
+      </div>
+      <p><strong>Competition:</strong> {{ f.competition|default:'Club match' }}</p>
+      <p><strong>Score:</strong> {% if f.home_goals is not None and f.away_goals is not None %}{{ f.home_goals }} - {{ f.away_goals }}{% else %}TBC{% endif %}</p>
+      <div class="acts">
+        <a class="btn alt" href="{% url 'fixture_detail' f.pk %}">View</a>
+        {% include 'remove.html' with kind='fixture' obj=f label='Remove' %}
+      </div>
+    </article>
+  {% empty %}
+    <p class="empty on-bg">No fixtures have been added yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

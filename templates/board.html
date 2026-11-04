@@ -1,0 +1,5 @@
+<div class="panel"><h3>{{ title }}</h3>
+{% for rank, p, value, pct in rows %}
+<div class="row{% if forloop.first %} lead{% endif %}"><span class="rank">{{ rank }}</span><div class="who"><strong>{{ p.name }}</strong><span>{{ p.position }}</span></div><span class="val">{{ value }}</span><div class="bar"><i style="width:{{ pct }}%"></i></div></div>
+{% empty %}<p class="empty">No {{ unit }} recorded yet.</p>{% endfor %}
+</div>

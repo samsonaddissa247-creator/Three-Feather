@@ -1,0 +1,46 @@
+{% extends 'base.html' %}{% load static %}
+{% block hero %}
+<div class="hero"><div class="wrap">
+<div class="badge"><img src="{% static 'logo.jpeg' %}" alt="Three Feathers crest"></div>
+<div>
+<h1>Three Feathers</h1>
+<p>A field hockey club with a proud crest and a squad that plays for each other. Meet the players, follow our games and see who is scoring and setting up the goals.</p>
+<div class="stats">
+<div class="stat"><b>{{ players }}</b>Players</div>
+<div class="stat"><b>{{ goals }}</b>Goals</div>
+<div class="stat"><b>{{ assists }}</b>Assists</div>
+</div>
+<a class="btn alt" href="{% url 'squad' %}">Meet the squad</a> <a class="btn" href="{% url 'fixtures' %}">See fixtures</a>
+</div></div></div>
+{% endblock %}
+{% block content %}
+{% if next %}
+<div class="next" style="margin-top:34px">
+<div><p>Next match</p><h3>Three Feathers v {{ next.opponent }}</h3>
+<p>{{ next.date|date:"l, j F" }}{% if next.time %}, {{ next.time|time:"H:i" }}{% endif %}{% if next.venue %}, {{ next.venue }}{% endif %}, {% if next.is_home %}Home{% else %}Away{% endif %}</p></div>
+<a class="btn alt" href="{% url 'fixtures' %}">All fixtures</a>
+</div>
+{% endif %}
+<h2 class="sub">About the club</h2>
+<div class="about">
+<div class="panel"><p>{{ club.about|default:"Three Feathers is a field hockey club. Meet the squad, follow our games and see photos from our matches."|linebreaksbr }}</p></div>
+{% if club.training or club.pitch or club.contact %}
+<div class="panel"><dl class="facts">
+{% if club.training %}<div><dt>Training</dt><dd>{{ club.training }}</dd></div>{% endif %}
+{% if club.pitch %}<div><dt>Home pitch</dt><dd>{{ club.pitch }}</dd></div>{% endif %}
+{% if club.contact %}<div><dt>Contact</dt><dd>{{ club.contact }}</dd></div>{% endif %}
+</dl></div>
+{% endif %}
+</div>
+{% if request.session.coach %}<div style="margin-top:16px"><a class="btn" href="{% url 'add' 'club' %}">Edit club info</a></div>{% endif %}
+<h2 class="sub">Players to watch</h2>
+<div class="boards">
+{% include 'spot.html' with title='Top scorer' row=scorer %}
+{% include 'spot.html' with title='Most assists' row=assister %}
+</div>
+{% if photos %}
+<h2 class="sub">From the touchline</h2>
+<div class="gal">{% for g in photos %}{% include 'figure.html' %}{% endfor %}</div>
+<p><a class="btn alt" href="{% url 'gallery' %}">See all photos</a></p>
+{% endif %}
+{% endblock %}

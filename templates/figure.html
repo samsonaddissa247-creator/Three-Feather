@@ -1,0 +1,2 @@
+<figure><a href="{{ g.image.url }}" target="_blank" rel="noopener"><img src="{{ g.image.url }}" alt="{{ g.caption|default:'Match photo' }}" loading="lazy"></a>
+{% if g.caption or request.session.coach %}<figcaption>{{ g.caption }}{% if request.session.coach %}{% include 'remove.html' with kind='photo' obj=g label='Remove photo' %}{% endif %}</figcaption>{% endif %}</figure>

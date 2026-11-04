@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}Gallery | Three Feathers{% endblock %}
+{% block content %}
+<h2>Gallery</h2>
+<p class="lede">Photos from our matches.</p>
+{% if request.session.coach %}<div class="actions"><a class="btn" href="{% url 'add' 'photos' %}">Add match photos</a></div>{% endif %}
+<div class="gal">{% for g in photos %}{% include 'figure.html' %}{% empty %}<p class="empty on-bg">No photos have been added yet.</p>{% endfor %}</div>
+{% endblock %}

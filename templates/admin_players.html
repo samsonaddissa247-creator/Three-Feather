@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Admin Players | Three Feathers{% endblock %}
+{% block content %}
+<h2>Player administration</h2>
+<p class="lede">Manage the squad list, player records and statistics.</p>
+<div class="actions"><a class="btn" href="{% url 'add' 'player' %}">Add player</a></div>
+<div class="grid">
+  {% for p in players %}
+    <article class="card">
+      <div class="cardhead">{% include 'avatar.html' %}<div class="num">{% if p.number is not None %}#{{ p.number }}{% endif %}</div></div>
+      <h3>{{ p.name }}</h3>
+      <div class="pos">{{ p.position }}</div>
+      <div class="tally"><div><b>{{ p.goals }}</b><span>Goals</span></div><div><b>{{ p.assists }}</b><span>Assists</span></div></div>
+      <div class="acts" style="margin-top:12px;">
+        <a class="btn alt" href="{% url 'player_detail' p.pk %}">View</a>
+        {% include 'remove.html' with kind='player' obj=p label='Remove' %}
+      </div>
+    </article>
+  {% empty %}
+    <p class="empty on-bg">No players have been added yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

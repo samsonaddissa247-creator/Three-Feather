@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }} | Three Feathers{% endblock %}
+{% block content %}
+<h2>{{ title }}</h2>
+<div class="coach" style="margin-top:18px">
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+{{ form.non_field_errors }}
+{% for f in form %}<label{% if f.name == 'about' %} class="wide"{% endif %}>{{ f.label }}{{ f }}{{ f.errors }}{% if f.help_text %}<small>{{ f.help_text }}</small>{% endif %}</label>{% endfor %}
+<div class="acts"><button class="btn" type="submit">Save</button><a class="btn alt" href="{% url back %}">Cancel</a></div>
+</form></div>
+{% endblock %}

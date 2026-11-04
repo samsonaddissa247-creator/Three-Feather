@@ -1,0 +1,3 @@
+<div class="panel"><h3>{{ title }}</h3>
+{% if row %}<div class="spot">{% include 'avatar.html' with p=row.1 %}<div class="who"><strong>{{ row.1.name }}</strong><span>{{ row.1.position }}</span></div><span class="val">{{ row.2 }}</span></div>
+{% else %}<p class="empty">Nothing recorded yet.</p>{% endif %}</div>

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}{{ player.name }} | Three Feathers{% endblock %}
+{% block content %}
+<h2>{{ player.name }}</h2>
+<div class="about">
+  <div class="panel">
+    {% if player.photo %}<img src="{{ player.photo.url }}" alt="{{ player.name }}" style="max-width:100%;border-radius:14px;display:block;margin-bottom:16px;">{% endif %}
+    <p><strong>Position:</strong> {{ player.position }}</p>
+    <p><strong>Jersey number:</strong> {% if player.number %}#{{ player.number }}{% else %}Not set{% endif %}</p>
+    <p><strong>Goals:</strong> {{ player.goals }}</p>
+    <p><strong>Assists:</strong> {{ player.assists }}</p>
+    <p><strong>Appearances:</strong> {{ player.appearances }}</p>
+  </div>
+  <div class="panel">
+    <h3>Profile</h3>
+    <p>{{ player.bio|default:"No player biography has been added yet."|linebreaksbr }}</p>
+  </div>
+</div>
+<p style="margin-top:16px;"><a class="btn alt" href="{% url 'squad' %}">Back to squad</a></p>
+{% endblock %}

@@ -1,0 +1,14 @@
+<article class="fx">
+<div class="when"><b>{{ f.date|date:"j" }}</b><span>{{ f.date|date:"M Y" }}</span></div>
+<div><h3>Three Feathers v {{ f.opponent }}</h3><small>{{ f.date|date:"l" }}{% if f.time %}, {{ f.time|time:"H:i" }}{% endif %}{% if f.venue %}, {{ f.venue }}{% endif %}, {% if f.is_home %}Home{% else %}Away{% endif %}</small></div>
+{% with o=f.outcome %}{% if o %}<div class="resbox"><span class="score">{{ f.our_score }} – {{ f.their_score }}</span><span class="res {{ o.0 }}">{{ o.1 }}</span></div>{% endif %}{% endwith %}
+{% if request.session.coach %}
+<div class="rec">
+<form method="post" action="{% url 'result' f.pk %}">{% csrf_token %}<span>{% if f.played %}Edit score{% else %}Final score{% endif %}</span>
+<input type="number" name="our_score" min="0" required value="{{ f.our_score|default_if_none:'' }}" aria-label="Three Feathers goals"><span>to</span>
+<input type="number" name="their_score" min="0" required value="{{ f.their_score|default_if_none:'' }}" aria-label="{{ f.opponent }} goals">
+<button class="sm wide-btn" type="submit">Save result</button></form>
+{% include 'remove.html' with kind='fixture' obj=f label='Remove game' %}
+</div>
+{% endif %}
+</article>
