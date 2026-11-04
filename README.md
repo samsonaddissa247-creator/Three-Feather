@@ -51,3 +51,4 @@ Copy `db.sqlite3` and the `media/` folder now and then. That is everything the c
 - `club/models.py` players, fixtures, photos and club info
 - `club/views.py` pages and the coach-only actions
 - `templates/` the pages, `static/styles.css` the maroon, green and white design
+# Three-Feather
