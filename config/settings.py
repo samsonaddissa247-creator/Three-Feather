@@ -48,7 +48,18 @@ TEMPLATES = [{
     ]},
 }]
 WSGI_APPLICATION = 'config.wsgi.application'
-DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
+
+DB_PATH = os.environ.get('DB_PATH', '/tmp/db.sqlite3' if os.environ.get('VERCEL') else BASE_DIR / 'db.sqlite3')
+if isinstance(DB_PATH, str):
+    db_dir = os.path.dirname(DB_PATH)
+    if db_dir and not os.path.exists(db_dir):
+        os.makedirs(db_dir, exist_ok=True)
+else:
+    db_dir = str(DB_PATH.parent)
+    if not os.path.exists(db_dir):
+        os.makedirs(db_dir, exist_ok=True)
+
+DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': DB_PATH}}
 
 LANGUAGE_CODE = 'en-gb'
 TIME_ZONE = 'Africa/Harare'
