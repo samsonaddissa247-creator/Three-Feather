@@ -9,8 +9,17 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-only-change-me')
 DEBUG = os.environ.get('DEBUG', '1') == '1'
 if not DEBUG and SECRET_KEY == 'dev-only-change-me':
     raise ImproperlyConfigured('Set the SECRET_KEY environment variable when DEBUG is off.')
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
-CSRF_TRUSTED_ORIGINS = [o for o in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',') if o]
+def _parse_csv_env(name, default=''):
+    return [item.strip() for item in os.environ.get(name, default).split(',') if item.strip()]
+
+ALLOWED_HOSTS = _parse_csv_env(
+    'ALLOWED_HOSTS',
+    'localhost,127.0.0.1,feathersclub.vercel.app,.vercel.app',
+)
+CSRF_TRUSTED_ORIGINS = _parse_csv_env(
+    'CSRF_TRUSTED_ORIGINS',
+    'http://localhost:8000,http://127.0.0.1:8000,https://localhost,https://127.0.0.1,https://feathersclub.vercel.app,https://*.vercel.app',
+)
 
 COACH_PASSWORD = os.environ.get('COACH_PASSWORD', 'COACHAB')
 
