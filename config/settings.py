@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import ImproperlyConfigured  # pyright: ignore[reportMissingModuleSource]
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
